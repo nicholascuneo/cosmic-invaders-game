@@ -2,6 +2,8 @@ import sys
 
 import pygame
 
+from settings import Settings
+
 
 class CosmicInvaders:
     """Overall class to manage game assets and behavior."""
@@ -9,12 +11,13 @@ class CosmicInvaders:
     def __init__(self):
         """Intitialize the game and create game resources."""
         pygame.init()
+        # Call and create instance of Settings class
+        self.settings = Settings()
 
-        self.screen = pygame.display.set_mode((1200, 800))
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height)
+        )
         pygame.display.set_caption("Cosmic Invaders")
-
-        # Set background color
-        self.bg_color = (0, 20, 50)
 
     def run_game(self):
         """Start main game loop."""
@@ -25,7 +28,7 @@ class CosmicInvaders:
                     sys.exit()
 
             # Redraw the screen during each pass through the the loop
-            self.screen.fill(self.bg_color)
+            self.screen.fill(self.settings.bg_color)
 
             # Make the most recently drawn screen visible.
             pygame.display.flip()
