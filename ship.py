@@ -4,10 +4,10 @@ import pygame
 class Ship:
     """A class to manage the ship"""
 
-    def __init__(self, ci_game):
+    def __init__(self, rs_game):
         """Initialize ship and set its starting position"""
-        self.screen = ci_game.screen
-        self.screen_rect = ci_game.screen.get_rect()
+        self.screen = rs_game.screen
+        self.screen_rect = rs_game.screen.get_rect()
 
         # Load ship image and get its rect.
         self.image = pygame.image.load("images/xwing.png")

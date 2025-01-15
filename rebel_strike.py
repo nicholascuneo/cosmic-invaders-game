@@ -6,7 +6,7 @@ from settings import Settings
 from ship import Ship
 
 
-class CosmicInvaders:
+class RebelStrike:
     """Overall class to manage game assets and behavior."""
 
     def __init__(self):
@@ -18,7 +18,7 @@ class CosmicInvaders:
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height)
         )
-        pygame.display.set_caption("Cosmic Invaders")
+        pygame.display.set_caption("Rebel Strike")
 
         self.ship = Ship(self)
 
@@ -40,5 +40,5 @@ class CosmicInvaders:
 
 if __name__ == "__main__":
     # Make a game instance, and run the game.
-    ci = CosmicInvaders()
-    ci.run_game()
+    rs = RebelStrike()
+    rs.run_game()
