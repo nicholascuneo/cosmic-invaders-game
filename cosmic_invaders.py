@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from settings import Settings
+from ship import Ship
 
 
 class CosmicInvaders:
@@ -19,6 +20,8 @@ class CosmicInvaders:
         )
         pygame.display.set_caption("Cosmic Invaders")
 
+        self.ship = Ship(self)
+
     def run_game(self):
         """Start main game loop."""
         while True:
@@ -29,6 +32,7 @@ class CosmicInvaders:
 
             # Redraw the screen during each pass through the the loop
             self.screen.fill(self.settings.bg_color)
+            self.ship.blitme()
 
             # Make the most recently drawn screen visible.
             pygame.display.flip()
