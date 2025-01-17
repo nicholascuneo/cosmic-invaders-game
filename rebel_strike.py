@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from bullet import Bullet
+from enemy import Enemy
 from settings import Settings
 from ship import Ship
 
@@ -23,6 +24,9 @@ class RebelStrike:
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.enemys = pygame.sprite.Group()
+
+        self._create_fleet()
 
     def run_game(self):
         """Start main game loop."""
@@ -82,12 +86,19 @@ class RebelStrike:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+    def _create_fleet(self):
+        """Create fleet of enemy ships"""
+        # Create an enemy ship
+        enemy = Enemy(self)
+        self.enemys.add(enemy)
+
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.enemys.draw(self.screen)
 
         # Make the most recently drawn screen visible.
         pygame.display.flip()
