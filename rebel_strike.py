@@ -88,9 +88,20 @@ class RebelStrike:
 
     def _create_fleet(self):
         """Create fleet of enemy ships"""
-        # Create an enemy ship
+        # Create an enemy ship and find the number of enemies in a row
+        # Spacing between each enemy ship is equal to one enemy ship width
         enemy = Enemy(self)
-        self.enemys.add(enemy)
+        enemy_width = enemy.rect.width
+        available_space_x = self.settings.screen_width - (2 * enemy_width)
+        number_enemys_x = available_space_x // (2 * enemy_width)
+
+        # Create row of enemy ships
+        for enemy_number in range(number_enemys_x):
+            # Create enemy ship and place it in the row
+            enemy = Enemy(self)
+            enemy.x = enemy_width + 2 * enemy_width * enemy_number
+            enemy.rect.x = enemy.x
+            self.enemys.add(enemy)
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
