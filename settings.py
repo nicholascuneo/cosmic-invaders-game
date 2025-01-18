@@ -9,6 +9,12 @@ class Settings:
         self.screen_height = 800
         self.bg_color = (0, 20, 50)
 
+        # Starry background settings
+        self.num_stars = 200
+        self.star_min_brightness = 100
+        self.star_max_brightness = 255
+        self.star_radius = 1
+
         # Ship settings
         self.ship_speed = 1.5
 

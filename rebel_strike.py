@@ -1,3 +1,4 @@
+import random
 import sys
 
 import pygame
@@ -21,6 +22,7 @@ class RebelStrike:
             (self.settings.screen_width, self.settings.screen_height)
         )
         pygame.display.set_caption("Rebel Strike")
+        self._generate_starry_background()
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -36,6 +38,28 @@ class RebelStrike:
             self.ship.update()
             self._update_bullets()
             self._update_screen()
+
+    def _generate_starry_background(self):
+        """Generate a starry background"""
+        self.starry_bg = pygame.Surface(
+            (self.settings.screen_width, self.settings.screen_height)
+        )
+        self.starry_bg.fill(self.settings.bg_color)  # Fill with base background color
+        for _ in range(self.settings.num_stars):  # Number of stars
+            # Random position for the star
+            star_x = random.randint(0, self.settings.screen_width - 1)
+            star_y = random.randint(0, self.settings.screen_height - 1)
+
+            # Random brightness for the star (shades of white to light grey)
+            brightness = random.randint(
+                self.settings.star_min_brightness, self.settings.star_max_brightness
+            )
+            star_color = (brightness, brightness, brightness)
+
+            # Draw the star with radius 1
+            pygame.draw.circle(
+                self.starry_bg, star_color, (star_x, star_y), self.settings.star_radius
+            )
 
     def _check_events(self):
         """Respond to keypresses and mouse events"""
@@ -105,7 +129,8 @@ class RebelStrike:
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
-        self.screen.fill(self.settings.bg_color)
+        self.screen.blit(self.starry_bg, (0, 0))  # Draw the starry background
+        # self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
