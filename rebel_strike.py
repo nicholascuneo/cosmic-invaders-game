@@ -54,12 +54,27 @@ class RebelStrike:
             brightness = random.randint(
                 self.settings.star_min_brightness, self.settings.star_max_brightness
             )
-            star_color = (brightness, brightness, brightness)
+
+            # Random star radius for depth effect
+            radius = random.randint(
+                self.settings.star_min_radius, self.settings.star_max_radius
+            )
+
+            # Generate color variation
+            if self.settings.star_color_variation:
+                red_variation = random.randint(-15, 15)
+                blue_variation = random.randint(-15, 15)
+                star_color = (
+                    max(0, min(255, brightness + red_variation)),
+                    brightness,
+                    max(0, min(255, brightness + blue_variation)),
+                )
+            else:
+                # No color variation, pure grayscale
+                star_color = (brightness, brightness, brightness)
 
             # Draw the star with radius 1
-            pygame.draw.circle(
-                self.starry_bg, star_color, (star_x, star_y), self.settings.star_radius
-            )
+            pygame.draw.circle(self.starry_bg, star_color, (star_x, star_y), radius)
 
     def _check_events(self):
         """Respond to keypresses and mouse events"""
@@ -121,11 +136,15 @@ class RebelStrike:
 
         # Create row of enemy ships
         for enemy_number in range(number_enemys_x):
-            # Create enemy ship and place it in the row
-            enemy = Enemy(self)
-            enemy.x = enemy_width + 2 * enemy_width * enemy_number
-            enemy.rect.x = enemy.x
-            self.enemys.add(enemy)
+            self._create_enemy(enemy_number)
+
+    def _create_enemy(self, enemy_number):
+        """Create an enemy ship and place it in the row"""
+        enemy = Enemy(self)
+        enemy_width = enemy.rect.width
+        enemy.x = enemy_width + 2 * enemy_width * enemy_number
+        enemy.rect.x = enemy.x
+        self.enemys.add(enemy)
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""

@@ -10,10 +10,12 @@ class Settings:
         self.bg_color = (0, 20, 50)
 
         # Starry background settings
-        self.num_stars = 200
+        self.num_stars = 300
         self.star_min_brightness = 100
         self.star_max_brightness = 255
-        self.star_radius = 1
+        self.star_min_radius = 1
+        self.star_max_radius = 1
+        self.star_color_variation = True
 
         # Ship settings
         self.ship_speed = 1.5
