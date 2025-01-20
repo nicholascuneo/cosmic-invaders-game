@@ -37,6 +37,7 @@ class RebelStrike:
             self._check_events()
             self.ship.update()
             self._update_bullets()
+            self._update_enemys()
             self._update_screen()
 
     def _generate_starry_background(self):
@@ -125,6 +126,11 @@ class RebelStrike:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+    def _update_enemys(self):
+        """Check if fleet is at an edge, then update positions of all enemies"""
+        self._check_fleet_edges()
+        self.enemys.update()
+
     def _create_fleet(self):
         """Create fleet of enemy ships"""
         # Create an enemy ship and find the number of enemies in a row
@@ -154,6 +160,19 @@ class RebelStrike:
         enemy.rect.x = enemy.x
         enemy.rect.y = enemy.rect.height + 2 * enemy.rect.height * row_number
         self.enemys.add(enemy)
+
+    def _check_fleet_edges(self):
+        """Respond if enemies have reached an edge"""
+        for enemy in self.enemys.sprites():
+            if enemy.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        """Drop fleet and change direction"""
+        for enemy in self.enemys.sprites():
+            enemy.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
