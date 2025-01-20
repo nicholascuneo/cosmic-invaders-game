@@ -126,6 +126,14 @@ class RebelStrike:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        # Check for bullets that have hit enemies and remove both
+        collisions = pygame.sprite.groupcollide(self.bullets, self.enemys, True, True)
+
+        if not self.enemys:
+            # Destroy remaining bullets and create a new fleet
+            self.bullets.empty()
+            self._create_fleet()
+
     def _update_enemys(self):
         """Check if fleet is at an edge, then update positions of all enemies"""
         self._check_fleet_edges()
