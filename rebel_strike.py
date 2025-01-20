@@ -126,6 +126,10 @@ class RebelStrike:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        self._check_bullet_enemy_collisions()
+
+    def _check_bullet_enemy_collisions(self):
+        """Check for bullet-enemy collisions"""
         # Check for bullets that have hit enemies and remove both
         collisions = pygame.sprite.groupcollide(self.bullets, self.enemys, True, True)
 
